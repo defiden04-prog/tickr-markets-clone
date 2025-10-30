@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+
+  --color-card: #000000;
+  --color-card-foreground: #ffffff;
+
+  --color-popover: #000000;
+  --color-popover-foreground: #ffffff;
+
+  --color-primary: #FF5722;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #1A1A1A;
+  --color-secondary-foreground: #ffffff;
+
+  --color-muted: #1A1A1A;
+  --color-muted-foreground: #999999;
+
+  --color-accent: #1A1A1A;
+  --color-accent-foreground: #ffffff;
+
+  --color-destructive: #EF4444;
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #333333;
+  --color-input: #1A1A1A;
+  --color-ring: #FF5722;
+
+  --color-chart-1: #10B981; /* Green (Positive) */
+  --color-chart-2: #EF4444; /* Red (Negative) */
+  --color-chart-3: #3B82F6; /* Blue */
+  --color-chart-4: #F59E0B; /* Yellow/Orange */
+  --color-chart-5: #EC4899; /* Pink (World Events) */
+
+  --color-small-header-text: #666666;
+  --color-mint-green-odds: #D1FAE5;
+  --color-pink-odds: #FEE2E2;
+
+  --color-tag-crypto-bg: #F59E0B33; /* rgba(245, 158, 11, 0.2) */
+  --color-tag-crypto-text: #F59E0B;
+  --color-tag-sports-bg: #FB923C33; /* rgba(251, 146, 60, 0.2) */
+  --color-tag-sports-text: #FB923C;
+  --color-tag-science-bg: #A855F733; /* rgba(168, 85, 247, 0.2) */
+  --color-tag-science-text: #A855F7;
+  --color-tag-world-events-bg: #EC489933; /* rgba(236, 72, 153, 0.2) */
+  --color-tag-world-events-text: #EC4899;
+  --color-tag-politics-bg: #3B82F633; /* rgba(59, 130, 246, 0.2) */
+  --color-tag-politics-text: #3B82F6;
+
+  --radius-lg: 0.5rem;
+  --radius-md: 0.375rem;
+  --radius-sm: 0.25rem;
+  --radius-xs: 0.125rem; /* For inner button corners */
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-cursor-flicker: cursor-flicker 1s infinite step-end;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes cursor-flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+}
+
+/*
+  The default border color has changed to currentColor in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
+  }
+}
+
+@layer utilities {
+  body {
+    font-family: var(--font-body);
+  }
+}
+
+@layer base {
+  :root {
+    --background: var(--color-background);
+    --foreground: var(--color-foreground);
+    --card: var(--color-card);
+    --card-foreground: var(--color-card-foreground);
+    --popover: var(--color-popover);
+    --popover-foreground: var(--color-popover-foreground);
+    --primary: var(--color-primary);
+    --primary-foreground: var(--color-primary-foreground);
+    --secondary: var(--color-secondary);
+    --secondary-foreground: var(--color-secondary-foreground);
+    --muted: var(--color-muted);
+    --muted-foreground: var(--color-muted-foreground);
+    --accent: var(--color-accent);
+    --accent-foreground: var(--color-accent-foreground);
+    --destructive: var(--color-destructive);
+    --destructive-foreground: var(--color-destructive-foreground);
+    --border: var(--color-border);
+    --input: var(--color-input);
+    --ring: var(--color-ring);
+    --chart-1: var(--color-chart-1);
+    --chart-2: var(--color-chart-2);
+    --chart-3: var(--color-chart-3);
+    --chart-4: var(--color-chart-4);
+    --chart-5: var(--color-chart-5);
+    --radius: var(--radius-lg);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.33;
+    font-weight: 500;
+    color: var(--foreground);
+    background-color: var(--background);
+  }
+
+  h1 {
+    font-size: 1.125rem; /* 18px */
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 700;
+    line-height: 2rem;
+  }
+
+  .text-xs-custom {
+    font-size: 0.625rem; /* 10px */
+    line-height: 1.2;
+  }
+
+  .text-sm-custom {
+    font-size: 0.6875rem; /* 11px */
+    line-height: 1.2;
+  }
+
+  .text-base-custom {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1.33;
+  }
+
+  .text-lg-custom {
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.2;
+  }
+
+  .text-xl-custom {
+    font-size: 1rem; /* 16px */
+    line-height: 1.2;
+  }
+
+  .font-regular {
+    font-weight: 400;
+  }
+
+  .font-medium {
+    font-weight: 500;
+  }
+
+  .font-semibold {
+    font-weight: 600;
+  }
+
+  .font-bold {
+    font-weight: 700;
+  }
+
+  .container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Hide Next.js error overlay portal */
+nextjs-portal {
+  display: none !important;
+}
