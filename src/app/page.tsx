@@ -1,8 +1,7 @@
 import TopStatusBar from "@/components/sections/top-status-bar";
 import MainHeader from "@/components/sections/main-header";
 import TickerBanner from "@/components/sections/ticker-banner";
-import MarketsHeader from "@/components/sections/markets-header";
-import MarketsTable from "@/components/sections/markets-table";
+import MarketsContainer from "@/components/sections/markets-container";
 import ActivityFeedSidebar from "@/components/sections/activity-feed-sidebar";
 
 export default function Page() {
@@ -14,8 +13,7 @@ export default function Page() {
       
       <div className="flex">
         <main className="flex-1 p-4">
-          <MarketsHeader />
-          <MarketsTable />
+          <MarketsContainer />
         </main>
         <ActivityFeedSidebar />
       </div>

@@ -10,6 +10,7 @@ import {
   Sun,
   Search,
 } from "lucide-react";
+import { useState, useEffect } from "react";
 
 // A custom component for the X logo, as it's not in lucide-react and the original asset is not provided.
 // This is to match the visual representation in the screenshots.
@@ -26,6 +27,35 @@ const XLogo = () => (
 );
 
 const MainHeader = () => {
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Keyboard shortcut for search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === '/' && !searchOpen) {
+        e.preventDefault();
+        setSearchOpen(true);
+        setTimeout(() => {
+          document.getElementById('market-search')?.focus();
+        }, 100);
+      }
+      if (e.key === 'Escape' && searchOpen) {
+        setSearchOpen(false);
+        setSearchQuery("");
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [searchOpen]);
+
+  // Dispatch search event to communicate with MarketsContainer
+  useEffect(() => {
+    const event = new CustomEvent('market-search', { detail: searchQuery });
+    window.dispatchEvent(event);
+  }, [searchQuery]);
+
   return (
     <header className="bg-background border-t border-b border-border px-4 h-[49px]">
       <div className="flex items-center justify-between h-full">
@@ -104,6 +134,7 @@ const MainHeader = () => {
           </button>
           <div className="lg:hidden">
             <button
+              onClick={() => setSearchOpen(!searchOpen)}
               className="inline-flex items-center justify-center w-10 h-[32px] rounded-md bg-secondary hover:bg-secondary/80 text-secondary-foreground border border-border transition-colors duration-200 focus:outline-none cursor-pointer"
               aria-label="Open search"
             >
@@ -113,6 +144,9 @@ const MainHeader = () => {
           <div className="hidden lg:block">
             <div className="relative">
               <input
+                id="market-search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="font-mono text-xs transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed h-[32px] bg-secondary text-foreground placeholder-muted-foreground border border-border focus:border-primary px-4 rounded-md pr-10 w-60"
                 placeholder="SEARCH MARKETS..."
               />
@@ -127,6 +161,22 @@ const MainHeader = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Search Overlay */}
+      {searchOpen && (
+        <div className="lg:hidden fixed inset-0 bg-black/80 z-50" onClick={() => setSearchOpen(false)}>
+          <div className="bg-background border-b border-border p-4" onClick={(e) => e.stopPropagation()}>
+            <input
+              id="market-search-mobile"
+              autoFocus
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full font-mono text-xs transition-colors focus:outline-none h-[40px] bg-secondary text-foreground placeholder-muted-foreground border border-border focus:border-primary px-4 rounded-md"
+              placeholder="SEARCH MARKETS..."
+            />
+          </div>
+        </div>
+      )}
     </header>
   );
 };
